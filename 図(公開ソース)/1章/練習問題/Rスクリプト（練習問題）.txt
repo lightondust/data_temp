@@ -1,0 +1,102 @@
+#問題1.1
+#データの入力
+weather <- read.csv("weather.csv")
+weather
+
+#問題1.1(2)
+label <- c("2.1～3.0", "3.1～4.0", "4.1～5.0", "5.1～6.0", "6.1～7.0", "7.1～8.0")
+table(cut(weather$平均気温, 2:8 ,labels=label))
+table(cut(weather$平均気温, 2:8 ,labels=label))/length(weather$平均気温)
+
+hist(weather$平均気温, breaks = seq(2,8,1), col="gray",
+  xlab="平均気温", ylab="度数", main="")
+
+#＜参考：幹葉図＞
+stem(weather$平均気温)
+
+#問題1.1(3)
+x <- c(weather$平均気温)
+y <- c(weather$平均湿度)
+z <- c(weather$日照時間)
+n <- length(x)
+mean(x);var(x)*(n-1)/n;sqrt(var(x)*(n-1)/n)
+mean(y);var(y)*(n-1)/n;sqrt(var(y)*(n-1)/n)
+mean(z);var(z)*(n-1)/n;sqrt(var(z)*(n-1)/n)
+
+#問題1.1(4)
+Fn <- ecdf(weather$平均気温)
+plot(Fn, do.point=F, verticals=T, xlab="平均気温",
+  ylab="累積相対度数", main="")
+
+#問題1.1(5)
+table(weather$風向き)
+table(weather$風向き)/length(weather$風向き)
+
+barplot(table(weather$風向き), xlab="風向き", ylab="度数")
+
+#＜参考：円グラフ＞
+data <- c(15,10,2,2,1,1)
+names(data) <- c("北北西","北西","西北西","東北東","南西","南東")
+pie(data, labels=names(data), main="風向き", clockwise=TRUE)
+
+#問題1.1(6)
+x <- c(weather$平均気温) 
+quantile(x)
+boxplot(weather$平均気温, ylab="平均気温", xlab="",range=0)
+
+#問題1.1(7)
+plot(weather[,2],weather[,3] , xlab="平均気温", ylab="平均湿度")
+plot(weather[,2],weather[,4] , xlab="平均気温", ylab="日照時間")
+plot(weather[,3],weather[,4] , xlab="平均湿度", ylab="日照時間")
+
+x <- c(weather$平均気温)
+y <- c(weather$平均湿度)
+z <- c(weather$日照時間)
+cor(x,y);cor(x,z);cor(y,z)
+
+#問題1.1(8)
+plot(weather$平均気温,  type="b", xlab="日", ylab="平均気温")
+
+
+#問題1.2
+#データの入力
+test <- read.csv("test.csv")
+test
+x <- c(test$１回目) 
+y <- c(test$２回目)
+n <- length(x)
+
+#問題1.2(1)
+mean(x);sqrt(var(x)*(n-1)/n)
+mean(y);sqrt(var(y)*(n-1)/n)
+
+#問題1.2(2)
+(test[3,2]-mean(x))/sqrt(var(x)*(n-1)/n)
+(test[3,3]-mean(y))/sqrt(var(y)*(n-1)/n)
+
+#問題1.2(3)
+sqrt(var(x)*(n-1)/n)/mean(x)
+sqrt(var(y)*(n-1)/n)/mean(y)
+
+#問題1.2(4)
+plot(x, y, xlab="1回目", ylab="2回目")
+cor(x, y)
+
+#問題1.2(5)
+lm(y~x)
+
+#問題1.2(6)
+summary(lm(y~x))$r.squared
+
+
+#問題1.3
+planet <- read.csv("planet.csv")
+planet
+
+#問題1.3(1)
+lm(planet$公転周期~planet$軌道長半径)
+summary(lm(planet$公転周期~planet$軌道長半径))$r.squared
+
+#問題1.3(2)
+lm(planet$公転周期~I(planet$軌道長半径^2))
+summary(lm(planet$公転周期~I(planet$軌道長半径^2)))$r.squared

@@ -1,0 +1,91 @@
+#データの入力
+plane <- read.csv("plane.csv")
+
+#図2.3（左図）の確率関数
+curve(dbinom(x,10,0.3), -1, 11, n=12001, xlab="", ylab="", yaxs="i",
+  main="確率関数", ylim=c(0,0.3))
+
+#図2.3（右図）の累積分布関数
+curve(pbinom(x,10,0.3), -1, 11, n=12001, xlab="", ylab="", yaxs="i",
+  main="累積分布関数")
+
+#図2.4（左図）の確率密度関数
+curve(dnorm(x,0,1), -4, 4, xlab="", ylab="", yaxs="i",
+  main="確率密度関数", ylim=c(0,0.45))
+
+#図2.4（右図）の累積分布関数
+curve(pnorm(x,0,1), -4, 4, xlab="", ylab="", yaxs="i",
+  main="累積分布関数", ylim=c(0,1))
+
+#図2.5のグラフ
+curve(dnorm(x,50,5), -1, 110, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.09))
+par(new=T)
+curve(dnorm(x,50,10), -1, 110, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.09))
+par(new=T)
+curve(dnorm(x,50,20), -1, 110, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.09))
+abline(v=50)
+
+#図2.6のグラフ
+curve(dnorm(x,40,10), -1, 110, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.042))
+par(new=T)
+curve(dnorm(x,50,10), -1, 110, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.042))
+par(new=T)
+curve(dnorm(x,60,10), -1, 110, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.042))
+abline(v=50)
+
+#図2.7のグラフ
+curve(dexp(x,1.5), 0, 5, xlab="時間", ylab="", main=expression(lambda==1.5),
+  xaxs="i", yaxs="i", xlim=c(0,5), ylim=c(0,1.6))
+
+#図2.9のグラフ
+curve(dchisq(x,1), 0, 30, xlab="", ylab="", xaxs="i", yaxs="i", main="", ylim=c(0,0.5))
+par(new=T)
+curve(dchisq(x,3), 0, 30, xlab="", ylab="", xaxs="i", yaxs="i", main="", ylim=c(0,0.5))
+par(new=T)
+curve(dchisq(x,5), 0, 30, xlab="", ylab="", xaxs="i", yaxs="i", main="", ylim=c(0,0.5))
+par(new=T)
+curve(dchisq(x,10), 0, 30, xlab="", ylab="", xaxs="i", yaxs="i", main="", ylim=c(0,0.5))
+
+#図2.10のグラフ
+curve(dt(x,1),-5,5, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.41), lty=4)
+par(new=T)
+curve(dt(x,3),-5,5, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.41), lty=3)
+par(new=T)
+curve(dt(x,10),-5,5, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.41), lty=2)
+par(new=T)
+curve(dt(x,50),-5,5, xlab="", ylab="", yaxs="i", main="", ylim=c(0,0.41), lty=1)
+abline(v=0)
+Labels <- c("df=1","df=3","df=5","df=10")
+legend("topright", legend=Labels, lty=4:1)
+
+#図2.11のグラフ
+df1 <- c(1,2,5,10,1)
+df2 <- c(1,1,2,1,1000)
+ltys <- c(5,4,3,2,1)
+lwds <- c(1,2,2,2,2)
+for(i in 1:5){
+  curve(df(x,df1[i],df2[i]), 0, 5, xlab="", ylab="", main="", xaxs="i", yaxs="i",
+    ylim=c(0,2.5), lty=ltys[i], lwd=lwds[i], n=1000)
+  par(new=T)
+}
+labels <- c("自由度(1,1)", "自由度(2,1)", "自由度(5,2)",
+  "自由度(10,1)", "自由度(100,1000)")
+legend("topright", legend=labels, lty=ltys, lwd=lwds)
+
+#図2.12のグラフ
+n <- 0:50
+y <- dbinom(n,50,0.2)
+plot(n, y, type="h", ylim=c(0,0.15), xlab="", ylab="", xaxs="i", yaxs="i")
+par(new=T)
+curve(dnorm(x,10,sqrt(8)), 0, 50, ylim=c(0,0.15), xlab="", ylab="", xaxs="i", yaxs="i")
+
+#＝＝＝＝＝＝＝＝＝＝＝
+#p.64の P(H_2|A) の計算
+plane[plane[,1]=="ロータ",]$原因である確率*
+  plane[plane[,1]=="ロータ",]$運航中止になる確率/
+  sum(plane$原因である確率*plane$運航中止になる確率)
+
+#表2.2の確率の計算
+dbinom(0:5, 5, 0.3)
+dbinom(0:5, 5, 0.4)
+dbinom(0:5, 5, 0.5)

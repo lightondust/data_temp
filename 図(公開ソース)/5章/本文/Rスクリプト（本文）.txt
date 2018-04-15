@@ -1,0 +1,120 @@
+#データの入力
+height <- read.csv("height.csv")
+dietweight <- read.csv("dietweight.csv")
+softball <- read.csv("softball.csv")
+room <- read.csv("room.csv")
+rats <- read.csv("rats.csv")
+
+
+#図5.1（左図）のヒストグラム
+n <- 10000
+rho <- 0.5
+data <- c()
+for(i in 1:n){
+  x <- rnorm(20)
+  y <- rho*x+sqrt(1-rho^2)*rnorm(20)
+  data <- c(data,cor(x,y))
+}
+hist(data,freq=FALSE,breaks=seq(min(data),1.0,by=0.02),
+  xlab="r",ylab="密度", main=expression(paste("標本の相関係数 ",(italic(rho)==0.5))))
+
+#図5.1（右図）のヒストグラム
+n <- 10000
+rho <- 0.8
+data <- c()
+for(i in 1:n){
+  x <- rnorm(20)
+  y <- rho*x+sqrt(1-rho^2)*rnorm(20)
+  data <- c(data,cor(x,y))
+}
+hist(data,freq=FALSE,breaks=seq(min(data),1.0,by=0.02),
+  xlab="r",ylab="密度", main=expression(paste("標本の相関係数 ",(italic(rho)==0.8))))
+
+#図5.2（左図）のヒストグラム
+n <- 10000
+rho <- 0.5
+data <- c()
+for(i in 1:n){
+  x <- rnorm(20)
+  y <- rho*x+sqrt(1-rho^2)*rnorm(20)
+  data <- c(data,cor(x,y))
+}
+z <- 1/2*log((1+data)/(1-data))
+hist(z,freq=FALSE,breaks=seq(min(z),max(z)+0.05,by=0.05),
+  xlab="r",ylab="密度", main=expression(paste("標本の相関係数 ",(italic(rho)==0.5))))
+
+#図5.2（右図）のヒストグラム
+n <- 10000
+rho <- 0.8
+data <- c()
+for(i in 1:n){
+  x <- rnorm(20)
+  y <- rho*x+sqrt(1-rho^2)*rnorm(20)
+  data <- c(data,cor(x,y))
+}
+z <- 1/2*log((1+data)/(1-data))
+hist(z,freq=FALSE,breaks=seq(min(z),max(z)+0.05,by=0.05),
+  xlab="r",ylab="密度", main=expression(paste("標本の相関係数 ",(italic(rho)==0.8))))
+
+
+#図5.3
+plot(son~father, xlab="父親", ylab="息子", data=height)
+
+#＝＝＝＝＝＝＝＝＝＝＝
+#p.166の例題の計算および回帰分析
+mean(height$father)
+mean(height$son)
+var(height$father)
+cov(height$father, height$son)
+var(height$son)
+lm(son~father, data=height)
+19/18*(var(height$son)-lm(son~father, data=height)$coefficients[[2]]*
+  cov(height$father, height$son))
+sqrt(19/18*(var(height$son)-lm(son~father, data=height)$coefficients[[2]]*
+  cov(height$father, height$son))/(19*var(height$father)))
+
+#5.1.3の回帰分析
+summary(lm(diet~diet.w, data=dietweight))
+
+#5.1.4の計算および回帰分析
+mean(softball$soft.x)
+mean(softball$soft.y)
+cor(softball$soft.x, softball$soft.y)
+summary(lm(soft.y~soft.x, data=softball))
+
+summary(lm(father~son, data=height))
+
+#5.1.7の例題
+summary(lm(家賃~大きさ, data=room))
+summary(lm(家賃~大きさ + 築年数, data=room))
+summary(lm(家賃~近さ + 大きさ, data=room))
+
+#5.1.8の例題
+r <- cor(height$son, height$father)
+z <- 1/2*log((1+r)/(1-r))
+r; z;
+
+z-1.96/sqrt(17)
+z+1.96/sqrt(17)
+tanh(z-1.96/sqrt(17))
+tanh(z+1.96/sqrt(17))
+
+#p.184(6行目～)の第4章の例2に基づく相関の検定の計算
+r <- cor(dietweight$diet.w, dietweight$diet)
+t <- sqrt(10-2)*(r/sqrt(1-r^2))
+P <- 2*(1-pt(t,8))
+r; t; P;
+
+#p.184のコラムのP値の計算
+P1 <- 2*(1-pt(sqrt(100-2)*(0.2/sqrt(1-0.2^2)),98))
+P2 <- 2*(1-pt(sqrt(400-2)*(0.1/sqrt(1-0.1^2)),398))
+P1; P2;
+
+#p.188のラットの餌データの分散分析
+names <- stack(rats)$ind
+weight <- stack(rats)$values
+summary(aov(weight~names))
+
+
+#p.189の賃貸マンションデータの"部屋の方角"による差の分散分析
+summary(aov(room$家賃~room$方角))

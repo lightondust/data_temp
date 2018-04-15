@@ -1,0 +1,39 @@
+#–â6.1
+death <- c(21, 32, 29, 12, 6)
+
+#–â6.1(1)
+dpois(0,2); dpois(1,2); dpois(2,2); dpois(3,2); 1-ppois(3,2);
+
+#–â6.1(2)
+p <- 100*c(dpois(0,2), dpois(1,2), dpois(2,2), dpois(3,2), 1-ppois(3,2))
+sum((death-p)^2/p)
+
+#–â6.1(3)
+m=(32+2*29+3*12+4*6)/100
+m
+dpois(0,m); dpois(1,m); dpois(2,m); dpois(3,m); 1-ppois(3,m);
+
+#–â6.1(4)
+p2 <- 100*c(dpois(0,m), dpois(1,m), dpois(2,m), dpois(3,m), 1-ppois(3,m))
+sum((death-p2)^2/p2)
+
+#–â6.2
+result <- matrix(c(52,40,11,17), 2, 2)
+result
+
+#–â6.2(1)
+m <- c(63,57)%*%t(c(92, 28))/120
+m
+
+#–â6.2(2)
+chi2 <- sum((result-m)^2/m)
+chi2
+1-pchisq(chi2, 1)
+
+#–â6.2(3)
+p1 <- 52/63
+p2 <- 40/57
+z <- (p1-p2)/sqrt(p1*(1-p1)/63+p2*(1-p2)/57)
+z
+2*(1-pnorm(abs(z)))
+

@@ -1,0 +1,36 @@
+#問5.1
+#データの入力
+planet <- read.csv("planet.csv")
+planet
+
+summary(lm(公転周期~軌道長半径, data=planet))
+
+#問5.2
+#データの入力
+baseball <- read.csv("baseball.csv")
+baseball
+
+#問5.2(1)
+summary(lm(勝率~平均年俸, data=baseball))
+
+#問5.2(2)
+summary(aov(平均年俸~リーグ, data=baseball))
+
+
+#問5.3
+#データの入力
+Mansion2 <- read.csv("Mansion2.csv")
+Mansion2
+
+summary(lm(家賃/100~大きさ+徒歩+築年数, data=Mansion2))
+summary(lm(家賃/100~大きさ+築年数, data=Mansion2))
+
+#問5.4
+r <- 24.7/sqrt(29.7*34.1)
+z <- (1/2)*log((1+r)/(1-r))
+r; z
+tanh(z-1.96/sqrt(15))
+tanh(z+1.96/sqrt(15))
+
+
+

@@ -1,0 +1,51 @@
+#データの入力
+lightspeed <- read.csv("lightspeed.csv")
+height <- read.csv("height.csv")
+
+#例7
+mean(lightspeed$speed)
+sd(lightspeed$speed)
+mean(lightspeed$speed)-1.96*sd(lightspeed$speed)/sqrt(20)
+mean(lightspeed$speed)+1.96*sd(lightspeed$speed)/sqrt(20)
+mean(lightspeed$speed)-2.58*sd(lightspeed$speed)/sqrt(20)
+mean(lightspeed$speed)+2.58*sd(lightspeed$speed)/sqrt(20)
+
+#例8
+var(lightspeed$speed)
+19*var(lightspeed$speed)/32.85
+19*var(lightspeed$speed)/8.91
+sqrt(19*var(lightspeed$speed)/32.85)
+sqrt(19*var(lightspeed$speed)/8.91)
+
+#例9
+65/1200-1.96*sqrt(0.054*0.946/1200)
+65/1200+1.96*sqrt(0.054*0.946/1200)
+65/1200-1.96*sqrt(0.8*0.054*0.946/1200)
+65/1200+1.96*sqrt(0.8*0.054*0.946/1200)
+
+#例10
+s1=sqrt(11.0^2/32+10.8^2/35)
+s1
+62.2-71.4-1.96*s1
+62.2-71.4+1.96*s1
+
+s2=sqrt((31*11^2+34*10.8^2)/65)
+s2
+62.2-71.4-2*s2*sqrt(1/32+1/35)
+62.2-71.4+2*s2*sqrt(1/32+1/35)
+
+#例11
+mean(height$son-height$father)
+sd(height$son-height$father)
+mean(height$son-height$father)-2.09*sd(height$son-height$father)/sqrt(20)
+mean(height$son-height$father)+2.09*sd(height$son-height$father)/sqrt(20)
+
+#表3.2の計算
+pbinom(4,16,0.5); pbinom(5,16,0.5); pbinom(6,16,0.5); pbinom(7,16,0.5); pbinom(8,16,0.5);
+pnorm((4-8)/2); pnorm((5-8)/2); pnorm((6-8)/2); pnorm((7-8)/2); pnorm((8-8)/2);
+pnorm((4.5-8)/2); pnorm((5.5-8)/2); pnorm((6.5-8)/2); pnorm((7.5-8)/2); pnorm((8.5-8)/2);
+
+#表3.3の計算
+pbinom(57,100,0.6); pbinom(114,200,0.6); pbinom(175,300,0.6);
+pnorm((57-60)/sqrt(24)); pnorm((114-120)/sqrt(48)); pnorm((175-180)/sqrt(72));
+pnorm((57.5-60)/sqrt(24)); pnorm((114.5-120)/sqrt(48)); pnorm((175.5-180)/sqrt(72));
